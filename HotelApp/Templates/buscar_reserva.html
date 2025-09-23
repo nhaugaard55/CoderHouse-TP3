@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Buscar Reservas{% endblock %}
+
+{% block content %}
+  <h2 class="mb-3">Buscar reservas</h2>
+  <form method="get" class="row g-2 mb-4 justify-content-center">
+    <div class="col-sm-6 col-md-4">
+      <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Apellido, nombre o número de habitación">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">Buscar</button>
+    </div>
+  </form>
+
+  {% if query %}
+    <h5>Resultados para "{{ query }}"</h5>
+    {% if resultados %}
+      <div class="table-responsive mt-3">
+        <table class="table table-bordered align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Habitación</th>
+              <th>Huésped</th>
+              <th>Check-in</th>
+              <th>Check-out</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for reserva in resultados %}
+              <tr>
+                <td>{{ reserva.habitacion.numero }}</td>
+                <td>{{ reserva.nombre }} {{ reserva.apellido }}</td>
+                <td>{{ reserva.check_in|date:"d/m/Y" }}</td>
+                <td>{{ reserva.check_out|date:"d/m/Y" }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="text-muted">No se encontraron reservas que coincidan.</p>
+    {% endif %}
+  {% endif %}
+{% endblock %}

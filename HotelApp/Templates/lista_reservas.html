@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Reservas{% endblock %}
+
+{% block content %}
+  <h2 class="mb-3">Reservas registradas</h2>
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+  {% if reservas %}
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Habitación</th>
+            <th>Huésped</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reserva in reservas %}
+            <tr>
+              <td>{{ reserva.habitacion.numero }}</td>
+              <td>{{ reserva.nombre }} {{ reserva.apellido }}</td>
+              <td>{{ reserva.check_in|date:"d/m/Y" }}</td>
+              <td>{{ reserva.check_out|date:"d/m/Y" }}</td>
+              <td>{{ reserva.notas|default:"-" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-muted">Todavía no hay reservas cargadas.</p>
+  {% endif %}
+{% endblock %}
