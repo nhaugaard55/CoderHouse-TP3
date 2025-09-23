@@ -19,6 +19,6 @@ class Reserva(models.Model):
 
 class Servicio(models.Model):
     habitacion = models.ForeignKey(Habitacion, on_delete=models.CASCADE)
-    tipo = models.CharField(max_length=50)  # limpieza, comida, etc.
+    tipo = models.CharField(max_length=50)
     fecha = models.DateField()
     comentario = models.TextField(blank=True)
