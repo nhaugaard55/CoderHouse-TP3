@@ -1,14 +1,17 @@
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import redirect, render
-from django.contrib import messages
 from .forms import HabitacionForm, ReservaForm, ServicioForm
 from .models import Habitacion, Reserva, Servicio
 
 
+@login_required
 def home(request):
     return render(request, "home.html")
 
 
+@login_required
 def crear_habitacion(request):
     if request.method == "POST":
         form = HabitacionForm(request.POST)
@@ -26,6 +29,7 @@ def crear_habitacion(request):
     })
 
 
+@login_required
 def crear_reserva(request):
     if request.method == "POST":
         form = ReservaForm(request.POST)
@@ -43,6 +47,7 @@ def crear_reserva(request):
     })
 
 
+@login_required
 def crear_servicio(request):
     if request.method == "POST":
         form = ServicioForm(request.POST)
@@ -60,12 +65,14 @@ def crear_servicio(request):
     })
 
 
+@login_required
 def lista_reservas(request):
     reservas = Reserva.objects.select_related(
         "habitacion").order_by("check_in")
     return render(request, "lista_reservas.html", {"reservas": reservas})
 
 
+@login_required
 def buscar_reserva(request):
     query = request.GET.get("q", "").strip()
     resultados = []
