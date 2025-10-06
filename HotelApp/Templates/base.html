@@ -26,19 +26,71 @@
             transform: translateY(-2px);
             box-shadow: 0 0.5rem 1.5rem rgba(15, 15, 15, 0.35);
         }
+
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.25);
+        }
     </style>
 </head>
-<body>
-    <header class="py-5 text-center">
-        <div class="container">
-            <h1 class="display-5 fw-semibold mb-0">The Paradise Hotel</h1>
-        </div>
+<body class="d-flex flex-column min-vh-100">
+    <header class="border-bottom border-secondary">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'home' %}">The Paradise Hotel</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Pages</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'lista_reservas' %}">Reservas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Ingresar</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <main class="container flex-grow-1 pb-5">
+    <main class="container flex-grow-1 py-5">
+        {% if messages %}
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
         {% block content %}
         {% endblock %}
     </main>
+
+    <footer class="py-4 mt-auto text-center">
+        <div class="container">
+            <small class="text-secondary">&copy; {{ now|date:"Y" }} The Paradise Hotel. Todos los derechos reservados.</small>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
