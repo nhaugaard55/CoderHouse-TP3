@@ -1,5 +1,5 @@
 from django import forms
-from .models import Habitacion, Reserva, Servicio
+from .models import Habitacion, Reserva
 
 
 class BootstrapModelForm(forms.ModelForm):
@@ -29,11 +29,3 @@ class ReservaForm(BootstrapModelForm):
             "check_out": forms.DateInput(attrs={"type": "date"}),
         }
 
-
-class ServicioForm(BootstrapModelForm):
-    class Meta:
-        model = Servicio
-        fields = "__all__"
-        widgets = {
-            "fecha": forms.DateInput(attrs={"type": "date"}),
-        }

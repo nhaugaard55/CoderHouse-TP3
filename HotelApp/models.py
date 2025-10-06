@@ -15,10 +15,3 @@ class Reserva(models.Model):
     check_in = models.DateField()
     check_out = models.DateField()
     notas = models.TextField(blank=True)
-
-
-class Servicio(models.Model):
-    habitacion = models.ForeignKey(Habitacion, on_delete=models.CASCADE)
-    tipo = models.CharField(max_length=50)
-    fecha = models.DateField()
-    comentario = models.TextField(blank=True)

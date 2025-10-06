@@ -2,8 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import redirect, render
-from .forms import HabitacionForm, ReservaForm, ServicioForm
-from .models import Habitacion, Reserva, Servicio
+from .forms import HabitacionForm, ReservaForm
+from .models import Habitacion, Reserva
 
 
 @login_required
@@ -44,24 +44,6 @@ def crear_reserva(request):
         "form": form,
         "titulo": "Nueva reserva",
         "boton": "Guardar reserva",
-    })
-
-
-@login_required
-def crear_servicio(request):
-    if request.method == "POST":
-        form = ServicioForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Servicio cargado correctamente.")
-            return redirect("lista_reservas")
-    else:
-        form = ServicioForm()
-
-    return render(request, "formulario.html", {
-        "form": form,
-        "titulo": "Nuevo servicio",
-        "boton": "Guardar servicio",
     })
 
 
