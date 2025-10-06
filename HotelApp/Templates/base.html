@@ -59,9 +59,24 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'lista_reservas' %}">Reservas</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Ingresar</a>
-                        </li>
+                        {% if request.user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'cuentas:perfil' %}">Perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <form action="{% url 'cuentas:logout' %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-link nav-link px-0">Salir</button>
+                                </form>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'cuentas:login' %}">Ingresar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'cuentas:registro' %}">Registrarme</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Crear cuenta | The Paradise Hotel{% endblock %}
+
+{% block content %}
+<section class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card bg-dark border-secondary shadow-sm">
+            <div class="card-body p-4 p-lg-5">
+                <h1 class="h4 mb-4 text-center">Crear una cuenta</h1>
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label text-light" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <div class="form-text text-white-50">{{ field.help_text }}</div>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'cuentas:login' %}" class="link-light small">¿Ya tenés cuenta? Iniciá sesión</a>
+                        <button type="submit" class="btn btn-primary">Registrarme</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -127,7 +127,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Redirecciones de autenticación
-LOGIN_URL = 'login'
+LOGIN_URL = 'cuentas:login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
