@@ -102,20 +102,21 @@ def calendario_reservas(request):
         .order_by("habitacion__numero", "check_in")
     )
 
-    reservas_por_habitacion = {habitacion.id: {} for habitacion in habitaciones}
+    reservas_por_habitacion = {habitacion.pk: {} for habitacion in habitaciones}
 
     for reserva in reservas:
         inicio = max(reserva.check_in, first_day)
         fin = min(reserva.check_out, last_day)
         actual = inicio
+        habitacion_id = getattr(reserva, "habitacion_id", reserva.habitacion.pk)
         while actual <= fin:
-            reservas_por_habitacion[reserva.habitacion_id][actual] = reserva
+            reservas_por_habitacion[habitacion_id][actual] = reserva
             actual += timedelta(days=1)
 
     filas_calendario = []
     for habitacion in habitaciones:
         celdas = []
-        mapa = reservas_por_habitacion.get(habitacion.id, {})
+        mapa = reservas_por_habitacion.get(habitacion.pk, {})
         for dia in days:
             celdas.append({
                 "dia": dia,
