@@ -8,4 +8,5 @@ urlpatterns = [
     path("reservas/nueva/", views.crear_reserva, name="crear_reserva"),
     path("reservas/", views.lista_reservas, name="lista_reservas"),
     path("reservas/buscar/", views.buscar_reserva, name="buscar_reserva"),
+    path("reservas/calendario/", views.calendario_reservas, name="calendario_reservas"),
 ]

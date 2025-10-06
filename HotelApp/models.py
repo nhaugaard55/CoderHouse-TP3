@@ -7,6 +7,9 @@ class Habitacion(models.Model):
     precio = models.DecimalField(max_digits=8, decimal_places=2)
     disponible = models.BooleanField(default=True)
 
+    def __str__(self) -> str:
+        return f"Habitación {self.numero}"
+
 
 class Reserva(models.Model):
     habitacion = models.ForeignKey(Habitacion, on_delete=models.CASCADE)

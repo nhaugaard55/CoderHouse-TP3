@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Calendario de reservas{% endblock %}
+
+{% block content %}
+<section class="mb-4 d-flex justify-content-between flex-wrap gap-2 align-items-center">
+    <div>
+        <h1 class="h4 mb-0">Calendario de reservas</h1>
+        <p class="text-secondary mb-0">{{ month_name }} {{ current_year }}</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-light btn-sm" href="{% url 'lista_reservas' %}">Vista listado</a>
+        <a class="btn btn-outline-secondary btn-sm" href="{% url 'calendario_reservas' %}?month={{ prev_month }}&year={{ prev_year }}">&laquo; Mes anterior</a>
+        <a class="btn btn-outline-secondary btn-sm" href="{% url 'calendario_reservas' %}?month={{ next_month }}&year={{ next_year }}">Mes siguiente &raquo;</a>
+    </div>
+</section>
+
+<style>
+    .tabla-calendario {
+        table-layout: fixed;
+        width: 100%;
+        font-size: 0.75rem;
+    }
+
+    .tabla-calendario th,
+    .tabla-calendario td {
+        padding: 0.6rem 0.4rem;
+        vertical-align: middle;
+        word-break: break-word;
+        width: 3rem;
+        height: 4rem;
+    }
+
+    @media (min-width: 992px) {
+        .tabla-calendario {
+            font-size: 0.85rem;
+        }
+    }
+</style>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-dark align-middle mb-0 tabla-calendario">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center align-middle" style="min-width: 90px;">Hab.</th>
+                {% for dia in dias %}
+                    <th scope="col" class="text-center small {% if dia < today %}opacity-50{% endif %}">
+                        {{ dia|date:"d" }}<br>
+                        <span class="text-secondary">{{ dia|date:"D" }}</span>
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for fila in filas_calendario %}
+                <tr>
+                    <th scope="row" class="text-center">{{ fila.habitacion.numero }}</th>
+                    {% for celda in fila.celdas %}
+                        {% if celda.reserva %}
+                            <td class="bg-primary bg-opacity-50 text-center text-wrap{% if celda.dia < today %} opacity-50{% endif %}">
+                                <strong>{{ celda.reserva.nombre }}</strong><br>
+                                <span class="small">{{ celda.reserva.apellido }}</span>
+                            </td>
+                        {% else %}
+                            <td class="text-center {% if celda.dia < today %}opacity-25{% endif %}">-</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="mt-3">
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary">Volver</a>
+</div>
+{% endblock %}
