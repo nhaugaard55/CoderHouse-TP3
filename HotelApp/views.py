@@ -13,7 +13,15 @@ from .models import Habitacion, Reserva
 
 @login_required
 def home(request):
-    return render(request, "home.html")
+    today = timezone.localdate()
+    llegadas_hoy = Reserva.objects.select_related("habitacion").filter(check_in=today)
+    salidas_hoy = Reserva.objects.select_related("habitacion").filter(check_out=today)
+
+    return render(request, "home.html", {
+        "llegadas_hoy": llegadas_hoy,
+        "salidas_hoy": salidas_hoy,
+        "hoy": today,
+    })
 
 
 @login_required

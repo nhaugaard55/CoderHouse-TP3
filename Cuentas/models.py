@@ -1,3 +1,5 @@
+from urllib.parse import quote_plus
+
 from django.conf import settings
 from django.db import models
 
@@ -36,4 +38,5 @@ class Perfil(models.Model):
     def avatar_url(self):
         if self.avatar:
             return self.avatar.url
-        return "https://ui-avatars.com/api/?name=" + self.user.get_username()
+        nombre = self.user.get_full_name() or self.user.get_username()
+        return "https://ui-avatars.com/api/?background=262b33&color=f8f9fa&name=" + quote_plus(nombre)

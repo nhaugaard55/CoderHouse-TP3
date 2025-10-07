@@ -35,6 +35,14 @@
         footer {
             background: rgba(0, 0, 0, 0.25);
         }
+
+        .nav-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+        }
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -60,8 +68,11 @@
                             <a class="nav-link" href="{% url 'lista_reservas' %}">Reservas</a>
                         </li>
                         {% if request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'cuentas:perfil' %}">Perfil</a>
+                            <li class="nav-item d-flex align-items-center ms-lg-3">
+                                <a class="nav-link d-flex align-items-center gap-2" href="{% url 'cuentas:perfil' %}">
+                                    <img src="{{ perfil_actual.avatar_url }}" alt="Avatar de {{ request.user.username }}" class="nav-avatar">
+                                    <span>{{ request.user.first_name|default:request.user.username }}</span>
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <form action="{% url 'cuentas:logout' %}" method="post" class="d-inline">
