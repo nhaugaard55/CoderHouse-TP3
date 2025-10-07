@@ -15,9 +15,7 @@ class Perfil(models.Model):
         related_name="perfil",
     )
     avatar = models.ImageField(upload_to=avatar_upload_to, blank=True, null=True)
-    bio = models.TextField(blank=True)
-    sitio_web = models.URLField(blank=True)
-    fecha_nacimiento = models.DateField(blank=True, null=True)
+    cargo = models.CharField(max_length=100, blank=True)
     actualizado = models.DateTimeField(auto_now=True)
 
     class Meta:

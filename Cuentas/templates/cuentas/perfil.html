@@ -24,20 +24,8 @@
                             <dt class="col-sm-4 text-light">Nombre</dt>
                             <dd class="col-sm-8 text-light">{{ request.user.get_full_name|default:"No especificado" }}</dd>
 
-                            <dt class="col-sm-4 text-light">Biografía</dt>
-                            <dd class="col-sm-8 text-light">{{ perfil.bio|default:"Agregá una descripción para que te conozcamos." }}</dd>
-
-                            <dt class="col-sm-4 text-light">Sitio web</dt>
-                            <dd class="col-sm-8 text-light">
-                                {% if perfil.sitio_web %}
-                                    <a href="{{ perfil.sitio_web }}" class="link-light" target="_blank" rel="noopener">{{ perfil.sitio_web }}</a>
-                                {% else %}
-                                    No especificado
-                                {% endif %}
-                            </dd>
-
-                            <dt class="col-sm-4 text-light">Fecha de nacimiento</dt>
-                            <dd class="col-sm-8 text-light">{{ perfil.fecha_nacimiento|date:"d/m/Y"|default:"No especificada" }}</dd>
+                            <dt class="col-sm-4 text-light">Cargo</dt>
+                            <dd class="col-sm-8 text-light">{{ perfil.cargo|default:"No especificado" }}</dd>
                         </dl>
 
                         <div class="d-flex flex-wrap gap-2 mt-4">

@@ -43,16 +43,10 @@ class UsuarioUpdateForm(forms.ModelForm):
 
 
 class PerfilForm(forms.ModelForm):
-    fecha_nacimiento = forms.DateField(
-        required=False,
-        widget=forms.DateInput(attrs={"type": "date", "class": "form-control"})
-    )
-
     class Meta:
         model = Perfil
-        fields = ["avatar", "bio", "sitio_web", "fecha_nacimiento"]
+        fields = ["avatar", "cargo"]
         widgets = {
             "avatar": forms.ClearableFileInput(attrs={"class": "form-control"}),
-            "bio": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
-            "sitio_web": forms.URLInput(attrs={"class": "form-control"}),
+            "cargo": forms.TextInput(attrs={"class": "form-control"}),
         }
