@@ -22,7 +22,7 @@
 
         <footer class="mt-5 pt-4 border-top border-secondary d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
             <a href="{% url 'paginas:lista' %}" class="btn btn-outline-light btn-sm">Volver a novedades</a>
-            {% if request.user.is_authenticated and (request.user == pagina.autor or request.user.is_staff) %}
+            {% if puede_editar %}
                 <div class="d-flex gap-2">
                     <a href="{% url 'paginas:editar' pagina.slug %}" class="btn btn-outline-secondary btn-sm">Editar</a>
                     <a href="{% url 'paginas:eliminar' pagina.slug %}" class="btn btn-outline-danger btn-sm">Eliminar</a>
