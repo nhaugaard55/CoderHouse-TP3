@@ -4,6 +4,7 @@ from django.contrib.auth.views import redirect_to_login
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
+from django.utils.text import slugify
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -15,6 +16,21 @@ from django.views.generic import (
 
 from .models import Pagina
 from .forms import PaginaForm
+
+
+def completar_campos_automaticos(pagina: Pagina) -> None:
+    base_slug = slugify(pagina.titulo) or "novedad"
+    slug = base_slug
+    qs = Pagina.objects.all()
+    if pagina.pk:
+        qs = qs.exclude(pk=pagina.pk)
+    contador = 1
+    while qs.filter(slug=slug).exists():
+        slug = f"{base_slug}-{contador}"
+        contador += 1
+    pagina.slug = slug
+    contenido = (pagina.contenido or "").strip()
+    pagina.extracto = contenido[:200]
 
 class AboutView(TemplateView):
     template_name = "paginas/about.html"
@@ -43,6 +59,7 @@ class PaginaCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.autor = self.request.user
+        completar_campos_automaticos(form.instance)
         return super().form_valid(form)
 
 
@@ -67,6 +84,10 @@ class PaginaUpdateView(AutorRequiredMixin, LoginRequiredMixin, SuccessMessageMix
     slug_url_kwarg = "slug"
     success_message = "Novedad actualizada correctamente."
     success_url = reverse_lazy("paginas:lista")
+
+    def form_valid(self, form):
+        completar_campos_automaticos(form.instance)
+        return super().form_valid(form)
 
 
 class PaginaDeleteView(AutorRequiredMixin, LoginRequiredMixin, DeleteView):

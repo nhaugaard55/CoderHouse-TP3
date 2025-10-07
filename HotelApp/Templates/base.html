@@ -54,7 +54,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarMain">
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto align-items-lg-center">
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'home' %}">Home</a>
                         </li>
@@ -68,24 +68,22 @@
                             <a class="nav-link" href="{% url 'lista_reservas' %}">Reservas</a>
                         </li>
                         {% if request.user.is_authenticated %}
-                            <li class="nav-item d-flex align-items-center ms-lg-3">
-                                <a class="nav-link d-flex align-items-center gap-2" href="{% url 'cuentas:perfil' %}">
-                                    <img src="{{ perfil_actual.avatar_url }}" alt="Avatar de {{ request.user.username }}" class="nav-avatar">
-                                    <span>{{ request.user.first_name|default:request.user.username }}</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <form action="{% url 'cuentas:logout' %}" method="post" class="d-inline">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-link nav-link px-0">Salir</button>
-                                </form>
+                            <li class="nav-item ms-lg-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <form action="{% url 'cuentas:logout' %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-light btn-sm">Salir</button>
+                                    </form>
+                                    <a class="d-flex align-items-center gap-2 text-decoration-none" href="{% url 'cuentas:perfil' %}">
+                                        <img src="{{ perfil_actual.avatar_url }}" alt="Avatar de {{ request.user.username }}" class="nav-avatar">
+                                        <span class="text-light">{{ request.user.first_name|default:request.user.username }}</span>
+                                    </a>
+                                </div>
                             </li>
                         {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'cuentas:login' %}">Ingresar</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'cuentas:registro' %}">Registrarme</a>
+                            <li class="nav-item ms-lg-4 d-flex gap-2">
+                                <a class="btn btn-outline-light btn-sm" href="{% url 'cuentas:login' %}">Ingresar</a>
+                                <a class="btn btn-primary btn-sm" href="{% url 'cuentas:registro' %}">Registrarme</a>
                             </li>
                         {% endif %}
                     </ul>
