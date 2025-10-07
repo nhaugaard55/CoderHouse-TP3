@@ -7,6 +7,7 @@ from .views import (
     PerfilView,
     RegistroView,
     editar_perfil,
+    eliminar_perfil,
 )
 
 app_name = "cuentas"
@@ -17,5 +18,6 @@ urlpatterns = [
     path("accounts/registro/", RegistroView.as_view(), name="registro"),
     path("accounts/perfil/", PerfilView.as_view(), name="perfil"),
     path("accounts/perfil/editar/", editar_perfil, name="editar_perfil"),
+    path("accounts/perfil/eliminar/", eliminar_perfil, name="eliminar_perfil"),
     path("accounts/password/cambiar/", CambiarPasswordView.as_view(), name="password_cambiar"),
 ]

@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
@@ -86,3 +86,16 @@ class CambiarPasswordView(LoginRequiredMixin, PasswordChangeView):
         for field in form.fields.values():
             field.widget.attrs.setdefault("class", "form-control")
         return form
+
+
+@login_required
+def eliminar_perfil(request):
+    if request.method == "POST":
+        username = request.user.get_username()
+        usuario = request.user
+        logout(request)
+        usuario.delete()
+        messages.success(request, f"La cuenta {username} se eliminó correctamente.")
+        return redirect("home")
+
+    return render(request, "cuentas/perfil_confirm_delete.html")

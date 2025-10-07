@@ -41,7 +41,10 @@
                     </fieldset>
 
                     <div class="d-flex justify-content-between align-items-center">
-                        <a href="{% url 'cuentas:perfil' %}" class="btn btn-outline-secondary">Cancelar</a>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'cuentas:perfil' %}" class="btn btn-outline-secondary">Cancelar</a>
+                            <a href="{% url 'cuentas:eliminar_perfil' %}" class="btn btn-outline-danger">Eliminar cuenta</a>
+                        </div>
                         <button type="submit" class="btn btn-primary">Guardar cambios</button>
                     </div>
                 </form>
